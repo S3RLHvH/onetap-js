@@ -1,0 +1,32 @@
+UI.AddSubTab(["Visuals", "SUBTAB_MGR"], "low delta");
+
+var jitter_cache = UI.GetValue(["Rage", "Anti Aim", "Directions", "Jitter offset"])
+var yaw_cache = UI.GetValue(["Rage", "Anti Aim", "Directions", "Yaw offset"])
+UI.AddCheckbox(["Visuals", "low delta", "low delta"],"(low delta)");
+
+function low_d()    
+{
+    localplayer_index = Entity.GetLocalPlayer( );
+
+
+        if (UI.GetValue(["Visuals", "low delta", "low delta","(low delta)"]) && UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+        {
+            UI.SetValue(["Rage", "Anti Aim", "Directions", "Yaw offset"], 15);
+            UI.SetValue(["Rage", "Anti Aim", "Directions", "Jitter offset"], 3);
+            AntiAim.SetOverride(1);
+            AntiAim.SetFakeOffset(0);
+            AntiAim.SetRealOffset(-30);
+        }
+        else
+        {
+            UI.SetValue(["Rage", "Anti Aim", "Directions", "Jitter offset"], jitter_cache);
+            UI.SetValue(["Rage", "Anti Aim", "Directions", "Yaw offset"], yaw_cache);
+            AntiAim.SetOverride(0);
+        }
+}
+
+function Main1()
+{
+    Cheat.RegisterCallback("CreateMove", "low_d");
+}
+Main1();
